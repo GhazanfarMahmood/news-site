@@ -1,0 +1,1 @@
+// This file used to fetch and implement the data from news api

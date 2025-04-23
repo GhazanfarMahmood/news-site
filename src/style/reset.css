@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* FONT */
+  --font-* :initial;
+  --font-primary: var(--font-roboto);
+  --font-secondary: var(--font-exo);
+  --font-arabic : var(--font-arabic);
+  --font-jp : var(--font-JP);
+}
+
+@theme {
+  /* CONTAINER MAX-WIDTH */
+  --container-* : initial;
+  --container : 80rem;         /* 1280px */
+  --container-lg : 70rem;      /* 1120px */
+  --container-md : 60rem;      /* 960px */
+  --container-sm : 45rem;      /* 720px */
+
+  /* BREAKPOINT */
+  --breakpoint-* : initial;
+  --breakpoint-2xl : 75rem;    /* 1200px */
+  --breakpoint-xl : 64rem;     /* 1024px */
+  --breakpoint-lg : 62rem;     /* 992px */
+  --breakpoint-md : 48rem;     /* 768px */
+  --breakpoint-sm : 36rem;     /* 576px */
+  --breakpoint-xs : 29rem;     /* 464px */
+  --breakpoint-2xs : 23rem;    /* 368px */
+  /* FONT SIZES */
+
+  /* COLORS */
+}
+@layer theme {
+  @media (width <= 75rem) {
+    :root {
+      --container : var(--container-lg)
+    }
+  }
+  @media (width <= 62rem){
+    :root {
+      --container : var(--container-md);
+    }
+  }
+  @media (width <= 48rem){
+    :root {
+      --container : var(--container-sm);
+    }
+  }
+}
+
+/* TO GIVE SOME CUSTOM CSS */
+@layer base {
+  /* I HAVE REMOVED THE SCROLL BEHAVIOR FROM HTML IF NEEDED THAN I WILL ADD IT */
+  body {
+    font-family: var(--font-roboto);
+  }
+
+  img, picture {
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-size: 0.875rem;
+    font-style: italic;
+  }
+
+  picture {
+    display: block;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}
+
+@layer utilities {
+  .container {
+    max-width: var(--container);
+    padding-inline: 15px;
+    margin-inline: auto;
+  }
+}
+
+/* IF NEEDED THAN I WILL MAKE A CUSTOM CLASS WITH THE NAME OF .btn__primary WITH THE HELP OF "utilities" AND IF NEEDED THAN I WILL STYLE THE CARD WITH THE HELP OF "components" */
