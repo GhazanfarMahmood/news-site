@@ -29,6 +29,13 @@
   /* FONT SIZES */
 
   /* COLORS */
+  --color-primary : oklch(58.8% .158 241.966);
+  --color-bg : #8080804d;
+  --color-dark : #000;
+  --color-light : #fff;
+  
+  /* FILTER */
+  --filter-primary : brightness(0) saturate(100%) invert(33%) sepia(42%) saturate(2536%) hue-rotate(177deg) brightness(103%) contrast(101%);;
 }
 @layer theme {
   @media (width <= 75rem) {
