@@ -4,10 +4,13 @@
   /* FONT */
   --font-* :initial;
   --font-primary: var(--font-roboto);
-  --font-secondary: var(--font-exo);
+  /* --font-secondary: var(--font-exo);
   --font-arabic : var(--font-arabic);
-  --font-jp : var(--font-JP);
+  --font-jp : var(--font-JP); */
 }
+
+/* TO PREVENT THE FORCED COLOR ADDED BY BROWSER */
+:root {forced-color-adjust: none;}
 
 @theme {
   /* CONTAINER MAX-WIDTH */
@@ -35,7 +38,9 @@
   --color-light : #fff;
   
   /* FILTER */
-  --filter-primary : brightness(0) saturate(100%) invert(33%) sepia(42%) saturate(2536%) hue-rotate(177deg) brightness(103%) contrast(101%);;
+  --filter-primary : brightness(0) saturate(100%) invert(33%) sepia(42%) saturate(2536%) hue-rotate(177deg) brightness(103%) contrast(101%);
+  --filter-dark: brightness(0) saturate(100%) invert(0%) sepia(69%) saturate(0%) hue-rotate(243deg) brightness(102%) contrast(102%);
+  --filter-light: brightness(0) saturate(100%) invert(97%) sepia(3%) saturate(0%) hue-rotate(238deg) brightness(104%) contrast(104%);;
 }
 @layer theme {
   @media (width <= 75rem) {
@@ -57,9 +62,20 @@
 
 /* TO GIVE SOME CUSTOM CSS */
 @layer base {
+  *{
+    color-scheme: light dark;
+  }
+
   /* I HAVE REMOVED THE SCROLL BEHAVIOR FROM HTML IF NEEDED THAN I WILL ADD IT */
   body {
     font-family: var(--font-roboto);
+    background-color: var(--color-light);
+  }
+
+  .dark-mode {
+    --color-dark : #fff;
+    --color-light : #000;
+    --filter-dark : var(--filter-light);
   }
 
   img, picture {

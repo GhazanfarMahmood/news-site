@@ -5,8 +5,9 @@ import { Roboto, Noto_Naskh_Arabic, Exo_2, Noto_Serif_JP } from "next/font/googl
 
 // RESET FILE CSS LINK
 import "@/style/reset.css";
-import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import { ThemeProvider } from "@/context/ThemeContext";
+import Navbar from "@/components/shared/Navbar";
 
 // FOR ENGLISH, FRENCH AND SPANISH LANGUAGE
 const roboto = Roboto({
@@ -17,32 +18,47 @@ const roboto = Roboto({
 })
 
 // FOR ARABIC LANGUAGE
-const arabic = Noto_Naskh_Arabic({
-  subsets : ["arabic"],
-  weight : ["400", "700"],
-  display : "swap",
-  variable : "--font-arabic",
-})
+// const arabic = Noto_Naskh_Arabic({
+//   subsets : ["arabic"],
+//   weight : ["400", "700"],
+//   display : "swap",
+//   variable : "--font-arabic",
+// })
 
 // FOR ENGLISH, FRENCH AND SPANISH LANGUAGE
-const exo = Exo_2({
-  subsets : ["latin"],
-  weight : ["400", "700"],
-  display : "swap",
-  variable : "--font-exo",
-})
+// const exo = Exo_2({
+//   subsets : ["latin"],
+//   weight : ["400", "700"],
+//   display : "swap",
+//   variable : "--font-exo",
+// })
 
 // FOR JAPANESE LANGUAGE
-const JP = Noto_Serif_JP({
-  subsets : ["latin"],
-  weight : ["400", "700"],
-  display : "swap",
-  variable : "--font-JP",
-})
+// const JP = Noto_Serif_JP({
+//   subsets : ["latin"],
+//   weight : ["400", "700"],
+//   display : "swap",
+//   variable : "--font-JP",
+// })
 
 export const metadata: Metadata = {
   title: "The Daily News",
   description: "Stay Enhanced With Latest News",
+
+  icons : {
+    icon : [
+      {
+        media : "(prefers-color-scheme : light)",
+        url : "/assets/images/favicon-dark-32x32.png",
+        href : "/assets/images/favicon-dark-32x32.png"
+      },
+      {
+        media : "(prefers-color-scheme : dark)",
+        url : "/assets/images/favicon-light-32x32.png",
+        href : "/assets/images/favicon-light-32x32.png",
+      }
+    ]
+  }
 };
 
 export default function RootLayout({
@@ -53,11 +69,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${arabic.variable} ${exo.variable} ${JP.variable} antialiased`}
+        className={`${roboto.variable} antialiased`}
       >
-        <Navbar />
-          {children}
-        <Footer />
+        <ThemeProvider>
+          <Navbar />
+            {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
