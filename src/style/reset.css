@@ -36,6 +36,12 @@
   --color-bg : #8080804d;
   --color-dark : #000;
   --color-light : #fff;
+  --color-br : #00000080;  
+  /* PRIVATE VARIABLE */
+  --color--c-bg : rgba(0,0,0,0.05);
+  --shadow-main : var(--shadow-dark-sh); /* Initial state: dark shadow */
+  --shadow-dark-sh : rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  --shadow-light-sh : rgba(255, 255, 255, 0.6) 0 0 20px 4px;
   
   /* FILTER */
   --filter-primary : brightness(0) saturate(100%) invert(33%) sepia(42%) saturate(2536%) hue-rotate(177deg) brightness(103%) contrast(101%);
@@ -76,6 +82,9 @@
     --color-dark : #fff;
     --color-light : #000;
     --filter-dark : var(--filter-light);
+    --color--c-bg : #8080804d;
+    /* --shadow-main: var(--shadow-light-sh); */
+    --color-br : #ffffff80;
   }
 
   img, picture {

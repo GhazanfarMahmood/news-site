@@ -8,6 +8,7 @@ import "@/style/reset.css";
 import Footer from "@/components/shared/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/shared/Navbar";
+import { UserProvider } from "@/context/UserContext";
 
 // FOR ENGLISH, FRENCH AND SPANISH LANGUAGE
 const roboto = Roboto({
@@ -72,9 +73,11 @@ export default function RootLayout({
         className={`${roboto.variable} antialiased`}
       >
         <ThemeProvider>
-          <Navbar />
-            {children}
-          <Footer />
+          <UserProvider>
+            <Navbar />
+              {children}
+            <Footer />
+          </UserProvider>
         </ThemeProvider>
       </body>
     </html>
