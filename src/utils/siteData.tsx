@@ -10,7 +10,7 @@ export default function SiteData() {
     useEffect(() =>{
         const fetchData = async () =>{
             try{
-                const response = await axios.get("https://newsapi.org/v2/everything?q=news&from=2025-06-02&sortBy=popularity", {
+                const response = await axios.get("https://newsapi.org/v2/everything?q=news&from=2025-05-29&sortBy=popularity&limit=500", {
                     headers : {
                         "Authorization": process.env.NEXT_PUBLIC_SECRET_API_KEY
                     },

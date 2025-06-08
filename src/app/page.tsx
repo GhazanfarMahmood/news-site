@@ -5,89 +5,64 @@ import SideBar from "@/components/shared/Sidebar";
 import CategoryTab from "@/components/ui/CategoryTab";
 import MainContent from "@/components/ui/MainContact";
 import { UserValue } from "@/context/UserContext";
-import { useEffect } from "react";
+import { ArrayProps } from "@/types/user";
+import { useEffect, useState } from "react";
 
 export default function Main(){
+  const [values, setValues] = useState<ArrayProps>([]);
+  const [currentPage, setCurrentPage] = useState<number>(3);
   const value = UserValue();
 
+  // Here's i again run useEffect hook in which i fetch data from values through custom hook and store that in setValues state and than use that state to get data in which we store value
   useEffect(() =>{
-    console.log(value)
-  }, [value])
+    setValues(value);
+  }, [value]);
 
-  // HERE WILL COME THE DATA FOR JUST A TIME TO DESIGN THE MAIN CONTENT AND SIDEBAR AFTER THAT THE DUMMY DATA WILL REMOVE AND ORIGINAL DATA COME FROM API
+  // HERE'S I DEFINE THE PAGE SIZE MEANS PRODUCT OR ITEM PER PAGE
+  const pageSize = 10;
 
-  const data = [
-    {
-      "source": {
-        "id": "fox-news",
-        "name": "Fox News"
-      },
-      "author": "Rachel Wolf",
-      "title": "Trump posts video thanking Elon Musk as billionaire ends White House tenure",
-      "description": "The Trump administration honored Elon Musk as the billionaire's tenure at the White House comes to an end. President Donald Trump awarded Musk a \"key to the White House\" in honor of his last day.",
-      "url": "https://www.foxnews.com/politics/trump-posts-video-thanking-elon-musk-billionaire-ends-white-house-tenure",
-      "urlToImage": null,
-      "publishedAt": "2025-05-31T15:51:42Z",
-      "content": "The Trump White House released a video on Friday marking the end of Elon Musks time working with the administration. The billionaire has been leading the newly formed Department of Government Efficie… [+2654 chars]"
-    },
-    {
-      "source": {
-        "id": "fox-news",
-        "name": "Fox News"
-      },
-      "author": "Rachel Wolf",
-      "title": "Trump posts video thanking Elon Musk as billionaire ends White House tenure",
-      "description": "The Trump administration honored Elon Musk as the billionaire's tenure at the White House comes to an end. President Donald Trump awarded Musk a \"key to the White House\" in honor of his last day.",
-      "url": "https://www.foxnews.com/politics/trump-posts-video-thanking-elon-musk-billionaire-ends-white-house-tenure",
-      "urlToImage": "https://static.foxnews.com/foxnews.com/content/uploads/2025/05/musk-trump-handshake.jpg",
-      "publishedAt": "2025-05-31T15:51:42Z",
-      "content": "The Trump White House released a video on Friday marking the end of Elon Musks time working with the administration. The billionaire has been leading the newly formed Department of Government Efficie… [+2654 chars]"
-    },
-    {
-      "source": {
-        "id": "fox-news",
-        "name": "Fox News"
-      },
-      "author": "Rachel Wolf",
-      "title": "Trump posts video thanking Elon Musk as billionaire ends White House tenure",
-      "description": "The Trump administration honored Elon Musk as the billionaire's tenure at the White House comes to an end. President Donald Trump awarded Musk a \"key to the White House\" in honor of his last day.",
-      "url": "https://www.foxnews.com/politics/trump-posts-video-thanking-elon-musk-billionaire-ends-white-house-tenure",
-      "urlToImage": "https://static.foxnews.com/foxnews.com/content/uploads/2025/05/musk-trump-handshake.jpg",
-      "publishedAt": "2025-05-31T15:51:42Z",
-      "content": "The Trump White House released a video on Friday marking the end of Elon Musks time working with the administration. The billionaire has been leading the newly formed Department of Government Efficie… [+2654 chars]"
-    },
-    {
-      "source": {
-        "id": "fox-news",
-        "name": "Fox News"
-      },
-      "author": "Rachel Wolf",
-      "title": "Trump posts video thanking Elon Musk as billionaire ends White House tenure",
-      "description": "The Trump administration honored Elon Musk as the billionaire's tenure at the White House comes to an end. President Donald Trump awarded Musk a \"key to the White House\" in honor of his last day.",
-      "url": "https://www.foxnews.com/politics/trump-posts-video-thanking-elon-musk-billionaire-ends-white-house-tenure",
-      "urlToImage": "https://static.foxnews.com/foxnews.com/content/uploads/2025/05/musk-trump-handshake.jpg",
-      "publishedAt": "2025-05-31T15:51:42Z",
-      "content": "The Trump White House released a video on Friday marking the end of Elon Musks time working with the administration. The billionaire has been leading the newly formed Department of Government Efficie… [+2654 chars]"
-    },
-  ]
+  // HERE'S I GET THE TOTAL PRODUCTS LENGTH THAT ARE COMING THROUGH AN API
+  const totalProducts = values.length;
+
+  // HERE we get the total pages with the help of totalProducts divided by pageSize and we use the Math.ceil because if the value come in rounded or decimal then we use Math.ceil to round of the number up to its nearest integer value.
+  const totalPages = Math.ceil(totalProducts / pageSize);
+
+  // here i will get the starting index of page
+  const start = pageSize * currentPage;
+
+  // here i will get the end index of page 
+  const end = pageSize + start;
+
+  // HERE I WILL RUN A FUNCTION IN WHICH WE THE PAGE CHANGE ON THE BASE OF NUMBER IN PAGINATION 
+  const handleChange = (n : number): void => {
+    setCurrentPage(n);
+  };
+
+  const handlePrev = () =>{
+    setCurrentPage((prev) => prev - 1);
+  };
+  
+  const handleNext = () => {
+    setCurrentPage((next) => next + 1);
+  }
 
   return (
     <div className="container">
       <CategoryTab />
       <div className="grid grid-cols-1 md:grid-cols-[60%_1fr] lg:grid-cols-3 gap-4">
         <div className="grid  row-start-2 md:row-start-1 grid-cols-1 lg:grid-cols-2 gap-2 col-span-1 lg:col-span-2">
-          {data.map((item) =>{
+          {values.slice(start, end).map((item) =>{
             return <MainContent item={item} key={item.publishedAt} />
           })}
         </div>
-        <div className="col-span-1 row-start-1 col-start-1 md:col-start-2 lg:col-start-3 md:sticky top-[20px] h-fit">
+        <div className="col-span-1 row-start-1 col-start-1 md:col-start-2 lg:col-start-3 md:sticky top-[20px] h-fit mb-[0px] md:mb-[50px]">
           <h1 className="font-bold text-dark text-[20px] mb-2">Popular Content</h1>
-          {data.map((item) => {
+          {values.slice(0, 5).map((item) => {
             return <SideBar item={item} key={item.publishedAt} />
           })}
         </div>
         <div className="col-span-2 md:row-start-2 row-start-3 md:col-span-3 lg:col-span-4">
-          <Pagination />
+          <Pagination pages={totalPages} handleChange={handleChange} currentPage={currentPage} handlePrev={handlePrev} handleNext={handleNext} start={start} totalPages={totalPages} />
         </div>
       </div>
     </div>
