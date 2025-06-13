@@ -42,3 +42,9 @@ export interface FullArticle {
 
 // first, we define the properties of all object in an array than we assign that object property to an array because array consist of data which is in the form of object that is coming from an API. 
 export type ArrayProps = FullArticle[];
+
+export interface UserContextType  {
+    query : string;
+    setQuery : (query : string) => void;
+    data : ArrayProps;
+}
