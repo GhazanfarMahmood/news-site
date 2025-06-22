@@ -8,18 +8,27 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Navbar() {
+  // USING CUSTOM HOOK SO THAT WE CAN GET QUERY FROM SEARCH BAR IN HEADER AND PASS IT IN THE URL AT THE PLACE OF QUERY 
   const { setQuery } = useUser();
+  // AGAIN CUSTOM HOOK FOR TOGGLING THEM ALSO CHANGING THE ICON BY USING isDark VARIABLE
   const { isDark, toggleTheme } = useTheme();
+  // HERE'S THE USE STATE HOOK TO GET THE INPUT DATA SO THAT INPUT DATA COULD BE PASS INTO setQuery
   const [inputData, setInputData] = useState<string>("");
 
+  // HERE'S WE USE THE usePathname next js navigation hook to make the link active
   const pathname = usePathname();
+  // CHECKING THE pathname of site equal to url where we want to go and store it in a variable
   const isActive = pathname === "/favorite";
 
+  // HERE WE ADD THE HANDLESUBMIT FUNCTION ON FORM TO PREVENT THE PAGE FROM LOADING AND SUBMIT THE VALUE OF INPUT FIELD VALUE INTO SETQUERY SO THAT WE CAN PASS THAT VALUE INTO URL AS A QUERY
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // HERES FIRST WE TRIM MEANS REMOVE THE EXTRA SPACES FROM INPUT FIELD AND AFTER REMOVING THE EXTRA SPACES FROM INPUT FIELD CHECK THE INPUTFIELD EMPTY OR NOT.IF INPUT FIELD IS EMPTY THAN FORM WILL NOT SUBMIT 
     if (inputData.trim() !== "") {
+      // HERE'S WE ALSO USE THE TRIM TO REMOVE EXTRA SPACES FROM BOTH SIDES
       setQuery(inputData.trim());
     }
+    // AFTER SUBMITTING THE VALUE WE CLEAN THE INPUT FIELD BY SETTING INPUTDATA TO EMPTY STRING
     setInputData("");
   };
 
@@ -47,6 +56,7 @@ export default function Navbar() {
               aria-label="search input"
               className="text-[14px] placeholder:text-gray-500 text-dark focus:outline-none"
               name="search"
+              // HERE'S WE USE VALUE BECAUSE FIRST WE STORE VALUE INTO USESTATE HOOK THROUGH ONCHANGE FUNCTION AND THAN WE PASS THAT VALUE BACK INTO INPUT FIELD TO MAKE IT CONTROL FUNCTION
               value={inputData}
               onChange={(e) => setInputData(e.target.value)}
             />
@@ -91,6 +101,7 @@ export default function Navbar() {
             </Link>
 
             {/* Theme Toggle */}
+            {/* THIS BUTTON IS USED TO MAKE TOGGLE THE DARK AND LIGHT MODE IN SITE */}
             <button
               onClick={toggleTheme}
               className="w-8 h-8 flex items-center justify-center border-[1px] border-dark rounded-md cursor-pointer transition-all delay-300 ease-in group hover:border-primary"

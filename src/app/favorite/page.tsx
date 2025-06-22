@@ -6,20 +6,26 @@ import { DataType } from "@/types/user";
 import Link from "next/link";
 
 export default function FavoritePage() {
+  // HERE'S WE USE THE USESTATE HOOK SO THAT VALUE FROM LOCAL STORAGE COME AND STORE INTO USESTATE HOOK
   const [favorites, setFavorites] = useState<DataType[]>([]);
 
+  // HERE'S WE GET THE VALUE FROM LOCAL STORAGE AND STORE INTO THE setFavorites FUNCTION OF LOCAL STORAGE 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("newArra") || "[]");
     setFavorites(stored);
   }, []);
 
+  // 
   useEffect(() => {
     const syncFavorites = () => {
       const updated = JSON.parse(localStorage.getItem("newArra") || "[]");
       setFavorites(updated);
     };
 
+    // HERE'S WE ADDED ANOTHER EVENT THAT WILL RUN WHEN EVERY TIME VALUE STORE IN LOCAL STORAGE AND WE GET VALUE FROM LOCAL STORAGE
     window.addEventListener("favoritesUpdated", syncFavorites);
+
+    // HERE'S IS THE CLEANUP FUNCTION IN WHICH WE REMOVE THE EVENT LISTENER FROM WINDOW THAT IS ALREADY ON WINDOW
     return () => {
       window.removeEventListener("favoritesUpdated", syncFavorites);
     };

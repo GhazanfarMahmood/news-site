@@ -9,13 +9,18 @@ import { ArrayProps } from "@/types/user";
 import { useEffect, useState } from "react";
 
 export default function Main() {
+  // HERE'S WE USE USESTATE HOOK TO GET VALUE AND STORE INTO VARIABLE
   const [values, setValues] = useState<ArrayProps>([]);
+  // HERE'S WE UPDATE AND SET THE PAGE THROUGH THE USESTATE HOOK
   const [currentPage, setCurrentPage] = useState<number>(0);
+  // HERE'S WE USE HOOK IN WHICH WE TRIGGER EVERYTIME WE STORE VALUE INTO LOCAL STORAGE
   const [forceUpdate, setForceUpdate] = useState(0); // <- 🆕 Add this to trigger rerender
 
+  // HERE'S WE GET THE DATA FOR MAIN CONTENT, SOURCE DATA FOR SIDE BAR DOUBLE LOADING ONE IS FOR WHEN THE PAGE IS LOAD AND SECOND IS FOR WHEN DATA COME THROUGH QUERY
   const { data, sourceData, initialLoading, queryLoading } = useUser();
 
   useEffect(() => {
+    // WE STORE DATA INTO setValues FUNCTION AND EVERYTIME THE DATA CHANGE WE CHANGE THE PAGES NUMBER
     setValues(data);
     setCurrentPage(0);
   }, [data]);
@@ -32,13 +37,20 @@ export default function Main() {
     };
   }, []);
 
+  // TOTAL PRODUCT THAT WE WANT TO SHOW PER PAGE
   const pageSize = 10;
+  // HERE'S WE WILL GET HOW MANY ITEMS WE ARE GETTING THROUGH API
   const totalProducts = values.length;
+  // HERE'S WE WANT TO SHOW HOW MANY PAGES COME BY DIVIDING TOTAL PRODUCTS BY NUMBER OF PRODUCTS WE WANT TO SHOW
   const totalPages = Math.ceil(totalProducts / pageSize);
+  // HERE'S IS THE STARTING OF PAGE COME BY MULTIPLYING THE CURRENT PAGE AND PAGE SIZE
   const start = pageSize * currentPage;
+  // HERE'S WE GET THE END PRODUCT OF PER PAGE WHICH WE GET BY ADDING START TO PAGE SIZE
   const end = pageSize + start;
 
+  // HERE'S WE UPDATE THE NUMBER OF PAGE BY USING HANDLE CHANGE AND ADD IT TO setCurrentPage function of a hook
   const handleChange = (n: number): void => setCurrentPage(n);
+  // MAKING TEH PAGE TO MOVE FORWARD AND BACKWARD BY ADDING AND REMOVE 1 FROM CURRENT PAGE
   const handlePrev = () => setCurrentPage((prev) => prev - 1);
   const handleNext = () => setCurrentPage((next) => next + 1);
 

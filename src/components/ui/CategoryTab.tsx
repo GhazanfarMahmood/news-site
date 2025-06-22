@@ -18,17 +18,25 @@ import React, { useState } from 'react';
 import { useCategories } from '@/utils/constant';
 
 export default function CategoryTab(){
+    // HERE'S WE USE CUSTOM HOOK TO GET setQuery FUNCTION SO THAT WE CAN GET VALUE THROUGH CATEGORY TAB AND PASS TO URL 
    const { setQuery } = useUser();
+    // HERE'S WE USE THE USESTATE HOOK TO MAKE THE TAB OR BUTTON ACTIVE ON WHICH WE CLICK
    const [active, setActive] = useState<string>("all");
 
+    // WE ADDED THE CLICK EVENT ON BUTTON SO THAT WE CAN GET THE VALUE OF DATA ATTRIBUTE AND PASS THE VALUE INTO setQuery FUNCTION    
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // HERE'S WE GET THE VALUE OF DATA ATTRIBUTE THROUGH A EVENT IN WHICH FIRST OF ALL WE GET THAT ELEMENT AND AFTER THAT WE GET DATA ATTRIBUTE AND AFTER THAT WE GET THE NAME OF DATA ATTRIBUTE AND VALUE STORE INTO A SELECTED CATEGORY
         const selectedCategory = e.currentTarget.dataset.category;
+        // IF SELECTED CATEGORY VALUE IS PRESENT
         if(selectedCategory){
+            // THAN PASS THAT VALUE TO setQuery function.
             setQuery(selectedCategory);
+            // HERE'S WE ALSO PASS THE VALUE FROM DATA ATTRIBUTE TO setActive FUNCTION
             setActive(selectedCategory);
         }
     }
 
+    // HERE'S WE GET ALL THE QUERIES WHICH ARE USED AS DATA ATTRIBUTE AND ALL VALUE THROUGH CONSTANT
     const categories = useCategories();
     return (
     <div className="px-[0] sm:px-[15px] my-[20px] relative">
@@ -63,7 +71,6 @@ export default function CategoryTab(){
                 </SwiperSlide>
                 })}
             </Swiper>
-
         <button className="arrow-left arrow w-[35px] h-[35px] bg-light flex items-center justify-center rounded-full absolute right-[-7px] sm:right-[7px] top-[50%] translate-y-[-50%] cursor-pointer z-[10] shadow-dark-sh disabled:hidden">
             <Image src="/assets/images/icons/chevron-right.svg" alt="arrow-icon" width={18} height={18} className="w-[18px] h-[18px] filter-(--filter-dark)" />
         </button>
