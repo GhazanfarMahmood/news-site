@@ -11,6 +11,8 @@ type ContextType = {
   sourceData: ArrayProps;
   initialLoading: boolean;
   queryLoading: boolean;
+  lang: string;
+  setLang: (val: string) => void;
 };
 
   const UserContext = createContext<ContextType | undefined>(undefined);
@@ -21,6 +23,7 @@ type ContextType = {
     const [sourceData, setSourceData] = useState<ArrayProps>([]);
     const [initialLoading, setInitialLoading] = useState<boolean>(true);
     const [queryLoading, setQueryLoading] = useState<boolean>(false);
+    const [lang, setLang] = useState<string>("en");
 
     // Main content data
     useEffect(() => {
@@ -61,7 +64,9 @@ type ContextType = {
         data,
         sourceData,
         initialLoading,
-        queryLoading, }}>
+        queryLoading,
+        lang,
+        setLang, }}>
         {children}
       </UserContext.Provider>
     );

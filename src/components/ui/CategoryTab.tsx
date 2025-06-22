@@ -15,19 +15,21 @@ import Image from "next/image";
 import { useUser } from '@/context/UserContext';
 import React, { useState } from 'react';
 
-import { categories } from '@/utils/constant';
+import { useCategories } from '@/utils/constant';
 
 export default function CategoryTab(){
    const { setQuery } = useUser();
    const [active, setActive] = useState<string>("all");
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const selectedCategory = e.currentTarget.dataset.category;
-    if(selectedCategory){
-        setQuery(selectedCategory);
-        setActive(selectedCategory);
+        const selectedCategory = e.currentTarget.dataset.category;
+        if(selectedCategory){
+            setQuery(selectedCategory);
+            setActive(selectedCategory);
+        }
     }
-}
+
+    const categories = useCategories();
     return (
     <div className="px-[0] sm:px-[15px] my-[20px] relative">
             <Swiper 
